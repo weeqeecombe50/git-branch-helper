@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js"
   },
-  "author": "Ihr Name",
+  "author": "Your Name",
   "license": "MIT",
   "dependencies": {
     "inquirer": "^8.2.0"

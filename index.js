@@ -77,13 +77,22 @@ const deleteBranch = async () => {
         },
     ]);
 
-    exec(`git branch -d ${branchName}`, (err, stdout, stderr) => {
-        if (err) {
-            console.error(`Error: ${stderr}`);
+    // Check if the branch exists before trying to delete it
+    exec(`git branch --list ${branchName}`, (err, stdout) => {
+        if (stdout.trim() === '') {
+            console.error(`Branch '${branchName}' existiert nicht.`);
+            commands();
             return;
         }
-        console.log(`Branch gelöscht: ${stdout}`);
-        commands();
+
+        exec(`git branch -d ${branchName}`, (err, stdout, stderr) => {
+            if (err) {
+                console.error(`Error: ${stderr}`);
+                return;
+            }
+            console.log(`Branch gelöscht: ${stdout}`);
+            commands();
+        });
     });
 };
 

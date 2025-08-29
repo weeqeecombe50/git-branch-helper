@@ -1,0 +1,14 @@
+{
+  "name": "git-branch-helper",
+  "version": "1.0.0",
+  "description": "Ein einfaches Tool zur Verwaltung und Visualisierung von Git-Branches in lokalen Repositories.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Ihr Name",
+  "license": "MIT",
+  "dependencies": {
+    "inquirer": "^8.2.0"
+  }
+}

@@ -79,6 +79,11 @@ const deleteBranch = async () => {
 
     // Check if the branch exists before trying to delete it
     exec(`git branch --list ${branchName}`, (err, stdout) => {
+        if (err) {
+            console.error(`Error checking branch existence: ${err.message}`);
+            commands();
+            return;
+        }
         if (stdout.trim() === '') {
             console.error(`Branch '${branchName}' existiert nicht.`);
             commands();
@@ -87,7 +92,7 @@ const deleteBranch = async () => {
 
         exec(`git branch -d ${branchName}`, (err, stdout, stderr) => {
             if (err) {
-                console.error(`Error: ${stderr}`);
+                console.error(`Error deleting branch: ${stderr}`);
                 return;
             }
             console.log(`Branch gelöscht: ${stdout}`);
@@ -112,6 +117,11 @@ const renameBranch = async () => {
 
     // Check if the old branch exists before renaming
     exec(`git branch --list ${oldBranchName}`, (err, stdout) => {
+        if (err) {
+            console.error(`Error checking branch existence: ${err.message}`);
+            commands();
+            return;
+        }
         if (stdout.trim() === '') {
             console.error(`Branch '${oldBranchName}' existiert nicht.`);
             commands();
@@ -120,7 +130,7 @@ const renameBranch = async () => {
 
         exec(`git branch -m ${oldBranchName} ${newBranchName}`, (err, stdout, stderr) => {
             if (err) {
-                console.error(`Error: ${stderr}`);
+                console.error(`Error renaming branch: ${stderr}`);
                 return;
             }
             console.log(`Branch umbenannt: ${stdout}`);

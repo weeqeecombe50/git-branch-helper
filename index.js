@@ -110,13 +110,22 @@ const renameBranch = async () => {
         },
     ]);
 
-    exec(`git branch -m ${oldBranchName} ${newBranchName}`, (err, stdout, stderr) => {
-        if (err) {
-            console.error(`Error: ${stderr}`);
+    // Check if the old branch exists before renaming
+    exec(`git branch --list ${oldBranchName}`, (err, stdout) => {
+        if (stdout.trim() === '') {
+            console.error(`Branch '${oldBranchName}' existiert nicht.`);
+            commands();
             return;
         }
-        console.log(`Branch umbenannt: ${stdout}`);
-        commands();
+
+        exec(`git branch -m ${oldBranchName} ${newBranchName}`, (err, stdout, stderr) => {
+            if (err) {
+                console.error(`Error: ${stderr}`);
+                return;
+            }
+            console.log(`Branch umbenannt: ${stdout}`);
+            commands();
+        });
     });
 };
 
